@@ -1,6 +1,6 @@
 {
   "name": "dbos.api",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "The official DBOS api wrapper!",
   "main": "dbos.api.js",
   "scripts": {
@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/wezacon/DBOS.api#readme",
   "dependencies": {
-    "request": "^2.88.2",
+    "fetch": "^1.1.0",
+    "https": "^1.0.0",
+    "node-fetch": "^2.6.1",
     "update-notifier": "^5.0.1"
   }
 }
