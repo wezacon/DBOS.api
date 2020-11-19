@@ -19,10 +19,10 @@ module.exports = {
     get: {
         user: {
             _info: async function(userId, serverId){
-                if(!userId){
+                if(userId == ''){
                     new TypeError('No userId provided!');
                 }
-                if(!serverId){
+                if(serverId == ''){
                     var target = "/global";
                 } else {
                     var target = "/s/" + serverId;
@@ -35,7 +35,16 @@ module.exports = {
             }
         },
         guild: {
-
+            _info: async function(serverId){
+                if(serverId == ''){
+                    new Error('Invalid serverId...');
+                }
+                let settings = { method: "Get" };
+                const res = await fetch(API + '/global/s/' + serverId, settings)
+                const proJson = await res.json();
+                // console.log(proJson.user)
+                return proJson.guild;
+            }
         }
     }
 
