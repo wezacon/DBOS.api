@@ -13,7 +13,7 @@ updateNotifier({
 		name: pkg.name,
 		version: pkg.version
 	},
-	updateCheckInterval: 0
+	updateCheckInterval: 30 * 1000
 }).notify();
 module.exports = {
     get: {
