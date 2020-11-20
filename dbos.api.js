@@ -1,7 +1,6 @@
 const pkg = require('./package.json');
 const updateNotifier = require('update-notifier');
 const https = require('https');
-const request = require('request');
 const fetch = require('node-fetch');
 var modulename = "DBOS.api";
 
@@ -13,10 +12,13 @@ updateNotifier({
 		name: pkg.name,
 		version: pkg.version
 	},
-	updateCheckInterval: 30 * 1000
+	updateCheckInterval: 0
 }).notify();
 module.exports = {
     get: {
+        version: function() {
+            return pkg.version
+        },
         user: {
             _info: async function(userId, serverId){
                 if(userId == ''){
@@ -29,9 +31,31 @@ module.exports = {
                 }
                 let settings = { method: "Get" };
                 const res = await fetch(API + target + '/u/' + userId, settings)
+                if(!res.status == 200) return new Error('Status code was not 200')
                 const proJson = await res.json();
-                // console.log(proJson.user)
                 return proJson.user;
+            },
+            level: async function(userId, serverId){
+                if(userId == ''){
+                    new TypeError('No userId provided!');
+                }
+                if(serverId == ''){
+                    new TypeError('No serverId provided!');
+                }
+                let settings = { method: "Get" };
+                const res = await fetch(`${API}/s/${serverId}/u/${userId}/level`, settings)
+                if(!res.status == 200) return new Error('Status code was not 200')
+                const proJson = await res.json();
+                return proJson.user;
+            }
+        },
+        bot: {
+            _info: async function(){
+                let settings = { method: "Get" };
+                const res = await fetch(API + '/bot', settings)
+                if(!res.status == 200) return new Error('Status code was not 200')
+                const proJson = await res.json();
+                return proJson;
             }
         },
         guild: {
@@ -41,8 +65,8 @@ module.exports = {
                 }
                 let settings = { method: "Get" };
                 const res = await fetch(API + '/global/s/' + serverId, settings)
+                if(!res.status == 200) return new Error('Status code was not 200')
                 const proJson = await res.json();
-                // console.log(proJson.user)
                 return proJson.guild;
             }
         }
