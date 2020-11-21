@@ -1,6 +1,6 @@
 {
   "name": "dbos.api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The official DBOS api wrapper!",
   "main": "dbos.api.js",
   "scripts": {
