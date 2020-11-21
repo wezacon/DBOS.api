@@ -19,6 +19,19 @@ module.exports = {
         version: function() {
             return pkg.version
         },
+        theme: async function(target){
+            if(target == "site"){
+                var get = 'site'
+            } else {
+                var get = 'bot'
+            }
+
+             let settings = { method: "Get" };
+             const res = await fetch(API + '/' + get + '/theme', settings)
+             if(!res.status == 200) return new Error('Status code was not 200')
+             const proJson = await res.json();
+             return proJson.theme   
+        },
         global: {
             users: async function(serverId){
                 if(serverId == ""){
