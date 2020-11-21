@@ -19,6 +19,21 @@ module.exports = {
         version: function() {
             return pkg.version
         },
+        global: {
+            users: async function(serverId){
+                if(serverId == ""){
+                   var target = "g/u/all";
+                } else {
+                   var target = `u/s/${serverId}/all`;
+                }
+
+                let settings = { method: "Get" };
+                const res = await fetch(API + '/' + target, settings)
+                if(!res.status == 200) return new Error('Status code was not 200')
+                const proJson = await res.json();
+                return proJson.users
+            }
+        },
         user: {
             _info: async function(userId, serverId){
                 if(userId == ''){
